@@ -1,0 +1,14 @@
+server:
+  port: 8081
+jwt:
+  auth:
+    converter:
+      resource-id: coloc-app-client
+spring:
+  profiles:
+    active: production
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/coloc-app
