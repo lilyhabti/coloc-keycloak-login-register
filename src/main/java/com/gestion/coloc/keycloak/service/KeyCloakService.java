@@ -45,7 +45,7 @@ public class KeyCloakService {
         String userId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
 
         // Assign the role to the user
-        assignRoleToUser(userId, "PROPRIETAIRE");
+        assignRoleToUser(userId, userDTO.getRoleName());
     }
 
     private void assignRoleToUser(String userId, String roleName) {

@@ -11,7 +11,7 @@ public class KeycloakConfig {
     final static String serverUrl = "http://localhost:8080";
     public final static String realm = "coloc-app";
     final static String clientId = "coloc-app-client";
-    final static String clientSecret = "x6nMcysZm5FeAqhozrp1xmgY1PbR9oq8";
+    final static String clientSecret = "Y3Og7npiX8tUKh5F2O08GKmy9tVuj5rX";
 
 
     public KeycloakConfig() {
