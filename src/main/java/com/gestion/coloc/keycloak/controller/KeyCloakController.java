@@ -4,9 +4,12 @@ import com.gestion.coloc.keycloak.dto.UserDTO;
 import com.gestion.coloc.keycloak.service.KeyCloakService;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/user")
@@ -15,10 +18,12 @@ public class KeyCloakController {
     @Autowired
     KeyCloakService service;
 
-    @PostMapping
-    public String addUser(@RequestBody UserDTO userDTO){
+    @PostMapping()
+    public ResponseEntity<Map<String, String>> addUser(@RequestBody UserDTO userDTO) {
         service.addUser(userDTO);
-        return "User Added Successfully.";
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User Added Successfully.");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "/{userName}")
