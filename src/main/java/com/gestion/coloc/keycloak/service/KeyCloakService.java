@@ -1,15 +1,19 @@
 package com.gestion.coloc.keycloak.service;
 
+import com.gestion.coloc.crud.models.User;
+import com.gestion.coloc.crud.repositories.UserRepository;
 import com.gestion.coloc.keycloak.config.Credentials;
 import com.gestion.coloc.keycloak.config.KeycloakConfig;
 import com.gestion.coloc.keycloak.dto.UserDTO;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.Response;
@@ -23,6 +27,9 @@ import static com.gestion.coloc.keycloak.config.KeycloakConfig.realm;
 @Service
 public class KeyCloakService {
 
+    @Autowired
+    private final UserRepository userRepository;
+
 
     public void addUser(UserDTO userDTO){
         CredentialRepresentation credential = Credentials
@@ -34,12 +41,21 @@ public class KeyCloakService {
         user.setCredentials(Collections.singletonList(credential));
         user.setEnabled(true);
 
+        User userBd = new User();
+        userBd.setUsername(userDTO.getUserName());
+        userBd.setEmail(userDTO.getEmailId());
+        userBd.setPassword(userDTO.getPassword());
+        userBd.setProfilePic("");
+        userBd.setRole(userDTO.getRoleName());
+
         // Create the user
         UsersResource instance = getInstance();
         Response response = instance.create(user);
         if (response.getStatus() != 201) {
             throw new RuntimeException("Failed to create user: HTTP error code: " + response.getStatus());
         }
+
+        userRepository.save(userBd);
 
         // Get the user's ID
         String userId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");

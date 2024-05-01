@@ -47,19 +47,44 @@ public class WebSecurityConfig {
             web.ignoring().requestMatchers(
                     HttpMethod.POST,
                     "/public/**",
-                    "/api/user"
+                    "/api/user",
+                    "/api/categories/**",
+                    "/api/expenses/**",
+                    "/api/flatshare-applications/**",
+                    "/api/flatshares/**",
+                    "/api/tasks/**",
+                    "/api/users/**"
             );
             web.ignoring().requestMatchers(
                     HttpMethod.GET,
-                    "/public/**"
+                    "/public/**",
+                    "/api/categories/**",
+                    "/api/expenses/**",
+                    "/api/flatshare-applications/**",
+                    "/api/flatshares/**",
+                    "/api/tasks/**",
+                    "/api/users/**",
+                    "/api/users/login"
             );
             web.ignoring().requestMatchers(
                     HttpMethod.DELETE,
-                    "/public/**"
+                    "/public/**",
+                    "/api/categories/**",
+                    "/api/expenses/**",
+                    "/api/flatshare-applications/**",
+                    "/api/flatshares/**",
+                    "/api/tasks/**",
+                    "/api/users/**"
             );
             web.ignoring().requestMatchers(
                     HttpMethod.PUT,
-                    "/public/**"
+                    "/public/**",
+                    "/api/categories/**",
+                    "/api/expenses/**",
+                    "/api/flatshare-applications/**",
+                    "/api/flatshares/**",
+                    "/api/tasks/**",
+                    "/api/users/**"
             );
             web.ignoring().requestMatchers(
                             HttpMethod.OPTIONS,
