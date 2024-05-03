@@ -34,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(userService.saveOrUpdateUser(user));
     }
 
-    @GetMapping
+    @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam("username") String username, @RequestParam("password") String password) {
         User user = userService.login(username, password);
         if (user != null) {
