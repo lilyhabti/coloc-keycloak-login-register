@@ -22,8 +22,8 @@ public class ExpenseController {
 
 
     @GetMapping
-    public ResponseEntity<List<Expense>> getAllExpenses(@RequestParam(name = "flatShareId") Long flatShareId) {
-        return ResponseEntity.ok(expenseService.getAllExpenses(flatShareId));
+    public ResponseEntity<List<Expense>> getAllExpenses(@RequestParam(name = "username") String username) {
+        return ResponseEntity.ok(expenseService.getAllExpenses(username));
     }
 
     @PostMapping

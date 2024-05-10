@@ -3,9 +3,11 @@ package com.gestion.coloc.crud.services.imp;
 import com.gestion.coloc.crud.models.Category;
 import com.gestion.coloc.crud.models.Expense;
 import com.gestion.coloc.crud.models.FlatShare;
+import com.gestion.coloc.crud.models.User;
 import com.gestion.coloc.crud.repositories.CategoryRepository;
 import com.gestion.coloc.crud.repositories.ExpenseRepository;
 import com.gestion.coloc.crud.repositories.FlatShareRepository;
+import com.gestion.coloc.crud.repositories.UserRepository;
 import com.gestion.coloc.crud.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,16 @@ public class ExpenseServiceImp implements ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final CategoryRepository categoryRepository;
     private final FlatShareRepository flatShareRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ExpenseServiceImp(ExpenseRepository expenseRepository, CategoryRepository categoryRepository, FlatShareRepository flatShareRepository) {
+    public ExpenseServiceImp(ExpenseRepository expenseRepository, CategoryRepository categoryRepository, FlatShareRepository flatShareRepository, UserRepository userRepository) {
         this.expenseRepository = expenseRepository;
         this.categoryRepository = categoryRepository;
         this.flatShareRepository = flatShareRepository;
+        this.userRepository = userRepository;
     }
+
 
     @Override
     public Expense createExpense(Expense expense, String nameCat, Long idFlat) {
@@ -51,8 +56,11 @@ public class ExpenseServiceImp implements ExpenseService {
     }
 
     @Override
-    public List<Expense> getAllExpenses(Long flatShareId) {
-        return expenseRepository.findExpensesByFlatShareId(flatShareId);
+    public List<Expense> getAllExpenses(String username) {
+
+        User user = userRepository.findByUsername(username);
+        FlatShare flatShare = user.getFlatShareColocs();
+        return expenseRepository.findExpensesByFlatShareId(flatShare.getIdFlat());
     }
 
     @Override
